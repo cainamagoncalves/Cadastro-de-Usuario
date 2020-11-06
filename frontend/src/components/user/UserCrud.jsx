@@ -21,6 +21,12 @@ export default class UserCrud extends Component {
 
     state = {...initialState} // Estadp iniciar
 
+    componentWillMount() {
+        axios(baseUrl).then(resp => {
+            this.setState({ list: resp.data }) // Requisitando dados e salvando na lista
+        })
+    }
+
     clear() {
         this.setState({ user: initialState.user })
     }
@@ -38,9 +44,9 @@ export default class UserCrud extends Component {
     }
     
     // Função para incluir
-    getUptadedList(user) {
+    getUptadedList(user, add = true) {
         const list = this.state.list.filter(u => u.id !== user.id) // Passa lista sem o usuário adicionado e depois o adiciona na primeira posição
-        list.unshift(user)
+        if(add) list.push(user)
         return list
     }   
 
@@ -69,9 +75,9 @@ export default class UserCrud extends Component {
                         <div className="form-group">
                             <label>E-mail</label>
                             <input type="text" className="form-control"
-                            name="name"
+                            name="email"
                             value={this.state.user.email}
-                            onChange={e => this.UptadeField(e)}
+                            onChange={e => this.uptadeField(e)}
                             placeholder="Digite o e-mail..."/>
                         </div>
                     </div>
@@ -94,12 +100,64 @@ export default class UserCrud extends Component {
             </div>
         )
     }
+
+    load(user) {
+        this.setState({ user })
+    }
+
+    remove(user) {
+        axios.delete(`${baseUrl}/${user.id}`).then(resp => {
+            const list = this.getUptadedList(user, false)
+            this.setState({list}) //Função delete, se for encontrado o user pelo url e id e a function getUptade for null, exclua usuário
+        })
+    }
+
+    renderTable() {
+        return (
+            <table className="table mt-4">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.renderRows()}
+                </tbody>
+            </table>
+        )
+    }
+
+    renderRows() {
+        return this.state.list.map(user => {
+            return (
+                <tr key={user.id}> {/* mapeando lista pelo id*/} 
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>
+                        <button className="btn btn-warning"
+                            onClick={e => this.load(user)}>  {/*Carregar usuário para editá-lo */}
+                            <i className="fa fa-pencil"></i>
+                        </button>
+                        <button className="btn btn-danger ml-2"
+                            onClick={e => this.remove(user)}> {/* Remover usuário */}
+                            <i className="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr> 
+            )   
+        })
+    }
     
 
     render() {
         return (
             <Main {...headerProps}>
                 {this.renderForm()}
+                {this.renderTable()}
             </Main>
         )
     }
