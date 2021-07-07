@@ -3,7 +3,7 @@
 
 <p align="center"> 🔗 Projeto para incluir, deletar e alterar usuários em um sistema </>
 
-![](https://media.giphy.com/media/nzB9moy4R6v7R78V11/giphy.gif)
+<img align="center">![](https://media.giphy.com/media/nzB9moy4R6v7R78V11/giphy.gif)<img>
 
 ## Índice
 <!--ts-->
