@@ -1,9 +1,9 @@
 # <center> PROJETO CADASTRO DE USUÁRIO </center>
 
 
-<p align="center"> 🔗 Projeto para incluir, deletar e alterar usuários em um sistema </>
+<p align="center"> 🔗 Projeto para incluir, deletar e alterar usuários em um sistema </p>
 
-<img align="center">![](https://media.giphy.com/media/nzB9moy4R6v7R78V11/giphy.gif)<img>
+# <center> ![](https://media.giphy.com/media/nzB9moy4R6v7R78V11/giphy.gif) </center>
 
 ## Índice
 <!--ts-->
